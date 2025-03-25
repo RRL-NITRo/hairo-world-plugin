@@ -1,5 +1,5 @@
 /**
-    UGV Joystick Controller
+    UGV Controller
     @author Kenta Suzuki
 */
 
@@ -33,7 +33,7 @@ public:
     virtual bool initialize(SimpleControllerIO* io) override
     {
         ostream& os = io->os();
-        
+
         Body* body = io->body();
 
         wheel[0] = body->link("FRONT_LEFT");

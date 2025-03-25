@@ -1,5 +1,5 @@
 /**
-    RA Joystick Controller
+    RoboticArm Controller
     @author Kenta Suzuki
 */
 

@@ -98,8 +98,8 @@ class RAJoystickController : public SimpleController
         char* finger3Name;
         const double* homePose;
         const double* speedLimits;
-        ArmInfo(char* bodyName, char* baseName, char* wristName,
-            int numFingers, double maxV, double maxW, char* finger1Name, char* finger2Name, char* finger3Name, const double* homePose, const double* speedLimits)
+        ArmInfo(char* bodyName, char* baseName, char* wristName, int numFingers, double maxV, double maxW,
+            char* finger1Name, char* finger2Name, char* finger3Name, const double* homePose, const double* speedLimits)
             : bodyName(bodyName),
               baseName(baseName),
               wristName(wristName),
@@ -365,7 +365,8 @@ public:
                     if(ioBody->name() == info.bodyName) {
                         // selected joint rotation
                         double w = info.speedLimits[joint->jointId()];
-                        qref[joint->jointId()] += pos * w * timeStep * speedRatio;
+                        double wt = w * timeStep * speedRatio;
+                        qref[joint->jointId()] += pos * wt;
                     }
                 }
             } else {
@@ -384,11 +385,13 @@ public:
 
                 VectorXd p(6);
                 if(currentMap == 0) {
-                    p.head<3>() = ikWrist->p() + Vector3(-pos[1], -pos[0], -pos[3]) * maxV * timeStep * speedRatio;
+                    Vector3 vt = Vector3(-pos[1], -pos[0], -pos[3]) * maxV * timeStep * speedRatio;
+                    p.head<3>() = ikWrist->p() + vt;
                     p.tail<3>() = rpyFromRot(ikWrist->R());
                 } else if(currentMap == 1) {
+                    Vector3 wt = Vector3(pos[1], -pos[0], -pos[2]) * maxW * timeStep * speedRatio;
                     p.head<3>() = ikWrist->p();
-                    p.tail<3>() = rpyFromRot(ikWrist->R() * rotFromRpy(Vector3(pos[1], -pos[0], -pos[2]) * maxW * timeStep * speedRatio));
+                    p.tail<3>() = rpyFromRot(ikWrist->R() * rotFromRpy(wt));
                 }
 
                 Isometry3 T;

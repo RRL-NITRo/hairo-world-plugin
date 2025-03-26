@@ -82,7 +82,6 @@ class RAJoystickController : public SimpleController
     bool prevActionState;
     double maxV;
     double maxW;
-    double time;
     double timeStep;
     bool isKinematicsMode;
 
@@ -204,12 +203,13 @@ public:
         currentJoint = 0;
         currentSpeed = 50;
         prevActionState = false;
-        time = 0.0;
         timeStep = io->timeStep();
 
         actions = {
             { 0, Joystick::SELECT_BUTTON },
-            { 1, Joystick::START_BUTTON  }
+            { 1, Joystick::START_BUTTON  },
+            { 2, Joystick::A_BUTTON      },
+            { 3, Joystick::B_BUTTON      }
         };
         actions2 = {
             { 0, 0 },
@@ -236,6 +236,7 @@ public:
             "joint control has set."
         };
 
+        bool is_action_running = false;
         for(auto& info : actions) {
             bool stateChanged = false;
             bool buttonState = joystick->getButtonState(targetMode, info.buttonId);
@@ -250,6 +251,14 @@ public:
                 } else if(info.actionId == 1) {
                     currentMap = currentMap == 2 ? 0 : currentMap + 1;
                     io->os() << texts[currentMap] << endl;
+                }
+            }
+
+            if(buttonState) {
+                if(info.actionId == 2) {
+
+                } else if(info.actionId == 3) {
+                    is_action_running = true;
                 }
             }
         }
@@ -300,25 +309,15 @@ public:
             }
         }
 
-        bool is_action_running = false;
-        for(int i = 0; i < 2; ++i) {
-            bool buttonState = joystick->getButtonState(targetMode,
-                i == 0 ? Joystick::A_BUTTON : Joystick::B_BUTTON);
-            if(buttonState) {
-                if(i == 0) {
-
-                } else if(i == 1) {
-                    for(int j = 0; j < ioBody->numJoints(); ++j) {
-                        for(auto& info : arms) {
-                            if(ioBody->name() == info.bodyName) {
-                                Link* joint = ioBody->joint(j);
-                                double qe = radian(info.homePose[j]);
-                                double q = joint->q();
-                                double deltaq = (qe - q) * timeStep;
-                                qref[joint->jointId()] += deltaq;
-                                is_action_running = true;
-                            }
-                        }
+        if(is_action_running) {
+            for(int i = 0; i < ioBody->numJoints(); ++i) {
+                for(auto& info : arms) {
+                    if(ioBody->name() == info.bodyName) {
+                        Link* joint = ioBody->joint(i);
+                        double qe = radian(info.homePose[i]);
+                        double q = joint->q();
+                        double deltaq = (qe - q) * timeStep;
+                        qref[joint->jointId()] += deltaq;
                     }
                 }
             }
@@ -446,7 +445,6 @@ public:
             }
         }
         qref_old = qref;
-        time += timeStep;
 
         return true;
     }

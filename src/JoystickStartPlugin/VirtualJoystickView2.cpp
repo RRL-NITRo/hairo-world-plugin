@@ -7,7 +7,6 @@
 #include <cnoid/MenuManager>
 #include <cnoid/ViewManager>
 #include <QBoxLayout>
-#include <QStackedLayout>
 #include "VirtualJoystickWidget.h"
 #include "OnScreenJoystickWidget.h"
 #include "gettext.h"
@@ -24,8 +23,8 @@ public:
 
     Impl(VirtualJoystickView2* self);
 
-    bool isOnScreenJoystickEnabled;
-    QStackedLayout* stackedLayout;
+    VirtualJoystickWidget* joystickWidget;
+    bool isAnalogViewEnabled;
 };
 
 }
@@ -46,16 +45,13 @@ VirtualJoystickView2::VirtualJoystickView2()
 
 VirtualJoystickView2::Impl::Impl(VirtualJoystickView2* self)
     : self(self),
-      isOnScreenJoystickEnabled(false)
+      isAnalogViewEnabled(false)
 {
     self->setDefaultLayoutArea(View::BottomCenterArea);
 
-    stackedLayout = new QStackedLayout;
-    stackedLayout->addWidget(new VirtualJoystickWidget);
-    // stackedLayout->addWidget(new OnScreenJoystickWidget);
-
+    joystickWidget = new VirtualJoystickWidget;
     auto vbox = new QVBoxLayout;
-    vbox->addLayout(stackedLayout);
+    vbox->addWidget(joystickWidget);
     self->setLayout(vbox);
 }
 
@@ -68,12 +64,12 @@ VirtualJoystickView2::~VirtualJoystickView2()
 
 void VirtualJoystickView2::onAttachedMenuRequest(MenuManager& menuManager)
 {
-    // auto screenCheck = menuManager.addCheckItem(_("Virtual Joystick2"));
-    // screenCheck->setChecked(impl->isOnScreenJoystickEnabled);
-    // screenCheck->sigToggled().connect([&](bool checked){
-    //     impl->isOnScreenJoystickEnabled = checked;
-    //     impl->stackedLayout->setCurrentIndex(checked ? 1 : 0);
-    // });
+    auto screenCheck = menuManager.addCheckItem(_("Analog stick mode"));
+    screenCheck->setChecked(impl->isAnalogViewEnabled);
+    screenCheck->sigToggled().connect([&](bool checked){
+        impl->isAnalogViewEnabled = checked;
+        impl->joystickWidget->setViewMode(checked ? ViewMode::AnalogView : ViewMode::NormalView);
+    });
 }
 
 

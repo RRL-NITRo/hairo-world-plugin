@@ -10,6 +10,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QKeyEvent>
+#include <QStackedLayout>
 #include <thread>
 #include <mutex>
 #include "gettext.h"
@@ -87,6 +88,7 @@ public:
     Impl(VirtualJoystickWidget* self);
 
     QGridLayout grid;
+    QStackedLayout* stackedLayout;
     ToolButton buttons[NUM_JOYSTICK_ELEMENTS];
     typedef std::map<int, int> KeyToButtonMap;
     KeyToButtonMap keyToButtonMap;
@@ -164,7 +166,16 @@ VirtualJoystickWidget::Impl::Impl(VirtualJoystickWidget* self)
     vbox->addStretch();
     vbox->addLayout(hbox);
     vbox->addStretch();
-    self->setLayout(vbox);
+
+    auto firstPageWidget = new QWidget;
+    firstPageWidget->setLayout(vbox);
+
+    auto secondPageWidget = new QWidget;
+
+    stackedLayout = new QStackedLayout;
+    stackedLayout->addWidget(firstPageWidget);
+    stackedLayout->addWidget(secondPageWidget);
+    self->setLayout(stackedLayout);
 
     ExtJoystick::registerJoystick("VirtualJoystickView2", this);
 }
@@ -173,6 +184,12 @@ VirtualJoystickWidget::Impl::Impl(VirtualJoystickWidget* self)
 VirtualJoystickWidget::~VirtualJoystickWidget()
 {
     delete impl;
+}
+
+
+void VirtualJoystickWidget::setViewMode(ViewMode mode)
+{
+    impl->stackedLayout->setCurrentIndex(mode);
 }
 
 

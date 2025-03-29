@@ -4,7 +4,7 @@ set(sources
   IntervalTimer.cpp
   JoystickLoggerItem.cpp
   JoystickStartPlugin.cpp
-  OnScreenJoystickView.cpp
+  VirtualJoystickView2.cpp
   JoystickTester.cpp
   JoystickStarter.cpp
   VirtualJoystickWidget.cpp
@@ -17,7 +17,7 @@ set(headers
   OnScreenJoystickWidget.h
   IntervalTimer.h
   JoystickLoggerItem.h
-  OnScreenJoystickView.h
+  VirtualJoystickView2.h
   JoystickTester.h
   JoystickStarter.h
   VirtualJoystickWidget.h

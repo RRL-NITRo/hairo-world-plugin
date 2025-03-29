@@ -240,7 +240,7 @@ views:
   -
     id: 10
     plugin: JoystickStart
-    class: OnScreenJoystickView
+    class: VirtualJoystickView2
     mounted: true
   -
     id: 11

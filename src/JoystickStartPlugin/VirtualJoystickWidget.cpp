@@ -165,9 +165,8 @@ VirtualJoystickWidget::Impl::Impl(VirtualJoystickWidget* self)
     vbox->addLayout(hbox);
     vbox->addStretch();
     self->setLayout(vbox);
-    self->setWindowTitle(_("Virtual Joystick2"));
 
-    ExtJoystick::registerJoystick("OnScreenJoystickView", this);
+    ExtJoystick::registerJoystick("VirtualJoystickView2", this);
 }
 
 

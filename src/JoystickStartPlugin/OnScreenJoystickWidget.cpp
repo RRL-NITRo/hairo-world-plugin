@@ -133,7 +133,7 @@ OnScreenJoystickWidget::Impl::Impl(OnScreenJoystickWidget* self)
     joystick.sigAxis().connect([&](int id, double position){ onAxis(id, position); });
     joystick.sigButton().connect([&](int id, bool isPressed){ onButton(id, isPressed); });
 
-    ExtJoystick::registerJoystick("OnScreenJoystickView", this);
+    ExtJoystick::registerJoystick("VirtualJoystickView2", this);
 }
 
 

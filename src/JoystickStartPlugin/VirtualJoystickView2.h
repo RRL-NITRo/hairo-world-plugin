@@ -2,21 +2,21 @@
    @author Kenta Suzuki
 */
 
-#ifndef CNOID_JOYSTICKSTART_PLUGIN_ONSCREEN_JOYSTICK_VIEW_H
-#define CNOID_JOYSTICKSTART_PLUGIN_ONSCREEN_JOYSTICK_VIEW_H
+#ifndef CNOID_JOYSTICKSTART_PLUGIN_VIRTUAL_JOYSTICK_VIEW2_H
+#define CNOID_JOYSTICKSTART_PLUGIN_VIRTUAL_JOYSTICK_VIEW2_H
 
 #include <cnoid/View>
 #include "exportdecl.h"
 
 namespace cnoid {
 
-class CNOID_EXPORT OnScreenJoystickView : public View
+class CNOID_EXPORT VirtualJoystickView2 : public View
 {
 public:
     static void initializeClass(ExtensionManager* ext);
 
-    OnScreenJoystickView();
-    virtual ~OnScreenJoystickView();
+    VirtualJoystickView2();
+    virtual ~VirtualJoystickView2();
 
 protected:
     virtual void onAttachedMenuRequest(MenuManager& menuManager) override;
@@ -30,4 +30,4 @@ private:
 
 }
 
-#endif // CNOID_JOYSTICKSTART_PLUGIN_ONSCREEN_JOYSTICK_VIEW_H
+#endif // CNOID_JOYSTICKSTART_PLUGIN_VIRTUAL_JOYSTICK_VIEW2_H

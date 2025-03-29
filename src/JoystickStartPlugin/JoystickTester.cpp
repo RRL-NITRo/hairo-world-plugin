@@ -4,7 +4,6 @@
 
 #include "JoystickTester.h"
 #include <cnoid/Buttons>
-#include <cnoid/Dialog>
 #include <cnoid/ExtensionManager>
 #include <cnoid/Format>
 #include <cnoid/JoystickCapture>
@@ -12,11 +11,14 @@
 #include <cnoid/Separator>
 #include <cnoid/stdx/filesystem>
 #include <QBoxLayout>
+#include <QComboBox>
+#include <QDialog>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
 #include <QProgressBar>
+#include <QStackedLayout>
 #include <fcntl.h>
 #include <linux/joystick.h>
 #include <map>
@@ -42,18 +44,37 @@ const map<string, int> modelIdMap = {
     { "Logicool Logicool Dual Action", 0 }
 };
 
+class TesterWidget : public QWidget
+{
+public:
+    TesterWidget(const QString& device, QWidget* parent = nullptr);
+
+private: // slots
+    void onAxis(int id, const double& position);
+    void onButton(int id, bool isPressed);
+
+private:
+    QString device;
+
+    JoystickCapture joystick;
+    vector<QProgressBar*> bars;
+    vector<QPushButton*> buttons;
+};
+
 class TesterDialog : public QDialog
 {
 public:
     TesterDialog(QWidget* parent = nullptr);
 
-private:
-    void onAxis(int id, const double& position);
-    void onButton(int id, bool isPressed);
+private: // slots
+    void on_deviceComboBox_currentIndexChanged(int index);
 
-    JoystickCapture joystick;
-    vector<QProgressBar*> bars;
-    vector<QPushButton*> buttons;
+private:
+    void createTesterWidget(const QString& device);
+
+    QComboBox* deviceComboBox;
+    QStackedLayout* stackedLayout;
+    QStringList models;
     QDialogButtonBox* buttonBox;
 };
 
@@ -85,10 +106,11 @@ JoystickTester::~JoystickTester()
 }
 
 
-TesterDialog::TesterDialog(QWidget* parent)
-    : QDialog(parent)
+TesterWidget::TesterWidget(const QString& device, QWidget* parent)
+    : QWidget(parent),
+      device(device)
 {
-    joystick.setDevice("/dev/input/js0");
+    joystick.setDevice(device.toStdString().c_str());
 
     joystick.sigAxis().connect(
         [&](int id, double position){ onAxis(id, position); });
@@ -96,7 +118,7 @@ TesterDialog::TesterDialog(QWidget* parent)
     joystick.sigButton().connect(
         [&](int id, bool isPressed){ onButton(id, isPressed); });
 
-    QGroupBox* groupBox = new QGroupBox(_("Axes"));
+    auto groupBox = new QGroupBox(_("Axes"));
     auto vbox = new QVBoxLayout;
     auto gridLayout = new QGridLayout;
     for(int i = 0; i < joystick.numAxes(); ++i) {
@@ -113,10 +135,11 @@ TesterDialog::TesterDialog(QWidget* parent)
     vbox->addStretch();
     groupBox->setLayout(vbox);
 
-    QGroupBox* groupBox2 = new QGroupBox(_("Buttons"));
+    auto groupBox2 = new QGroupBox(_("Buttons"));
     vbox = new QVBoxLayout;
     for(int i = 0; i < joystick.numButtons(); ++i) {
-        PushButton* button = new PushButton(to_string(i).c_str());
+        const string label = "Button " + to_string(i);
+        PushButton* button = new PushButton(label.c_str());
         buttons.push_back(button);
         vbox->addWidget(button);
     }
@@ -127,17 +150,41 @@ TesterDialog::TesterDialog(QWidget* parent)
     layout->addWidget(groupBox);
     layout->addWidget(groupBox2);
 
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
-    connect(buttonBox, &QDialogButtonBox::accepted, [&](){ accept(); });
-
     auto mainLayout = new QVBoxLayout;
     mainLayout->addLayout(layout);
-    mainLayout->addStretch();
-    mainLayout->addWidget(new HSeparator);
-    mainLayout->addWidget(buttonBox);
     setLayout(mainLayout);
+}
 
+
+void TesterWidget::onAxis(int id, const double& position)
+{
+    QProgressBar* bar = bars[id];
+    double value = 100.0 * position;
+    bar->setValue(value);
+    bar->setFormat(formatC("{0:.3}%", value).c_str());
+}
+
+
+void TesterWidget::onButton(int id, bool isPressed)
+{
+    QPalette palette;
+    if(isPressed) {
+        palette.setColor(QPalette::Button, QColor(Qt::red));
+    }
+    buttons[id]->setPalette(palette);
+}
+
+
+TesterDialog::TesterDialog(QWidget* parent)
+    : QDialog(parent)
+{
     setWindowTitle(_("Joystick Tester"));
+
+    deviceComboBox = new QComboBox(this);
+    connect(deviceComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged),
+        [=](int index){ on_deviceComboBox_currentIndexChanged(index); });
+
+    stackedLayout = new QStackedLayout;
 
     int id = 0;
     while(true) {
@@ -157,35 +204,47 @@ TesterDialog::TesterDialog(QWidget* parent)
             break;
         }
         string identifier(buf);
+        models << identifier.c_str();
+        createTesterWidget(file.c_str());
 
-        int ret = -1;
-        auto iter = modelIdMap.find(identifier);
-        if(iter != modelIdMap.end()) {
-            ret = iter->second;
-        }
-
-        identifier += ret < 0 ? " (Unsupported)" : " (Supported)";
-        setWindowTitle(identifier.c_str());
         ++id;
-        break;
+        // break;
     }
+
+    auto layout = new QHBoxLayout;
+    layout->addWidget(new QLabel(_("Device")));
+    layout->addWidget(deviceComboBox);
+
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok);
+    connect(buttonBox, &QDialogButtonBox::accepted, [&](){ this->accept(); });
+
+    auto mainLayout = new QVBoxLayout;
+    mainLayout->addLayout(layout);
+    mainLayout->addLayout(stackedLayout);
+    mainLayout->addStretch();
+    mainLayout->addWidget(new HSeparator);
+    mainLayout->addWidget(buttonBox);
+    setLayout(mainLayout);
 }
 
 
-void TesterDialog::onAxis(int id, const double& position)
+void TesterDialog::on_deviceComboBox_currentIndexChanged(int index)
 {
-    QProgressBar* bar = bars[id];
-    double value = 100.0 * position;
-    bar->setValue(value);
-    bar->setFormat(formatC("{0:.3}%", value).c_str());
+    stackedLayout->setCurrentIndex(index);
+    string model_name = models.at(index).toStdString();
+
+    int ret = -1;
+    auto iter = modelIdMap.find(model_name);
+    if(iter != modelIdMap.end()) {
+        ret = iter->second;
+    }
+    model_name += ret < 0 ? " (Unsupported)" : " (Supported)";
+    setWindowTitle(model_name.c_str());
 }
 
 
-void TesterDialog::onButton(int id, bool isPressed)
+void TesterDialog::createTesterWidget(const QString& device)
 {
-    QPalette palette;
-    if(isPressed) {
-        palette.setColor(QPalette::Button, QColor(Qt::red));
-    }
-    buttons[id]->setPalette(palette);
+    deviceComboBox->addItem(device);
+    stackedLayout->addWidget(new TesterWidget(device.toStdString().c_str()));
 }

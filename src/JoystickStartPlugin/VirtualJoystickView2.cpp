@@ -68,7 +68,7 @@ VirtualJoystickView2::~VirtualJoystickView2()
 
 void VirtualJoystickView2::onAttachedMenuRequest(MenuManager& menuManager)
 {
-    // auto screenCheck = menuManager.addCheckItem(_("On-screen Joystick"));
+    // auto screenCheck = menuManager.addCheckItem(_("Virtual Joystick2"));
     // screenCheck->setChecked(impl->isOnScreenJoystickEnabled);
     // screenCheck->sigToggled().connect([&](bool checked){
     //     impl->isOnScreenJoystickEnabled = checked;

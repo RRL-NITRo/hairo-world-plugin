@@ -29,9 +29,6 @@ msgstr "仮想ジョイスティック2"
 msgid "Show the virtual joystick"
 msgstr "仮想ジョイスティックの表示"
 
-msgid "On-screen Joystick"
-msgstr "オンスクリーンジョイスティック"
-
 msgid "Joystick"
 msgstr ""
 

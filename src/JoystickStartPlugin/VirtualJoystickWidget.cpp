@@ -13,6 +13,7 @@
 #include <QStackedLayout>
 #include <thread>
 #include <mutex>
+#include "OnScreenJoystickWidget.h"
 #include "gettext.h"
 
 using namespace std;
@@ -170,7 +171,9 @@ VirtualJoystickWidget::Impl::Impl(VirtualJoystickWidget* self)
     auto firstPageWidget = new QWidget;
     firstPageWidget->setLayout(vbox);
 
-    auto secondPageWidget = new QWidget;
+    auto secondPageWidget = new OnScreenJoystickWidget;
+    secondPageWidget->sigAxis().connect([&](int id, double position){ onAxis(id, position); });
+    secondPageWidget->sigButton().connect([&](int id, bool isPressed){ onButton(id, isPressed); });
 
     stackedLayout = new QStackedLayout;
     stackedLayout->addWidget(firstPageWidget);

@@ -8,7 +8,6 @@
 #include <cnoid/ViewManager>
 #include <QBoxLayout>
 #include "VirtualJoystickWidget.h"
-#include "OnScreenJoystickWidget.h"
 #include "gettext.h"
 
 using namespace std;

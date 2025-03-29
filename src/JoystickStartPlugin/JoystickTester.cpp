@@ -10,19 +10,37 @@
 #include <cnoid/JoystickCapture>
 #include <cnoid/MainMenu>
 #include <cnoid/Separator>
+#include <cnoid/stdx/filesystem>
 #include <QBoxLayout>
 #include <QDialogButtonBox>
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
 #include <QProgressBar>
+#include <fcntl.h>
+#include <linux/joystick.h>
+#include <map>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include <vector>
 #include "gettext.h"
 
 using namespace std;
 using namespace cnoid;
+namespace filesystem = stdx::filesystem;
 
 namespace {
+
+const map<string, int> modelIdMap = {
+    { "Sony Computer Entertainment Wireless Controller", 0 },
+    { "Sony Interactive Entertainment Wireless Controller", 0 },
+    { "Sony Interactive Entertainment DUALSHOCK®4 USB Wireless Adaptor", 0 },
+    { "Sony PLAYSTATION(R)3 Controller", 0 },
+    { "Microsoft X-Box 360 pad", 0 },
+    { "Microsoft X-Box One pad", 0 },
+    { "Logitech Gamepad F310", 0 },
+    { "Logicool Logicool Dual Action", 0 }
+};
 
 class TesterDialog : public QDialog
 {
@@ -120,6 +138,37 @@ TesterDialog::TesterDialog(QWidget* parent)
     setLayout(mainLayout);
 
     setWindowTitle(_("Joystick Tester"));
+
+    int id = 0;
+    while(true) {
+        string file = formatC("/dev/input/js{}", id);
+        if(!filesystem::exists(filesystem::path(file))) {
+            break;
+        }
+        int tmpfd = ::open(file.c_str(), O_RDONLY | O_NONBLOCK);
+        if(tmpfd < 0) {
+            break;
+        }
+
+        // check the josytick model name
+        char buf[1024];
+        if(ioctl(tmpfd, JSIOCGNAME(sizeof(buf)), buf) < 0) {
+            ::close(tmpfd);
+            break;
+        }
+        string identifier(buf);
+
+        int ret = -1;
+        auto iter = modelIdMap.find(identifier);
+        if(iter != modelIdMap.end()) {
+            ret = iter->second;
+        }
+
+        identifier += ret < 0 ? " (Unsupported)" : " (Supported)";
+        setWindowTitle(identifier.c_str());
+        ++id;
+        break;
+    }
 }
 
 

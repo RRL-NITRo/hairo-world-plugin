@@ -23,7 +23,7 @@ public:
     Impl(VirtualJoystickView2* self);
 
     VirtualJoystickWidget* joystickWidget;
-    bool isAnalogViewEnabled;
+    bool isDraggerViewEnabled;
 };
 
 }
@@ -44,7 +44,7 @@ VirtualJoystickView2::VirtualJoystickView2()
 
 VirtualJoystickView2::Impl::Impl(VirtualJoystickView2* self)
     : self(self),
-      isAnalogViewEnabled(false)
+      isDraggerViewEnabled(false)
 {
     self->setDefaultLayoutArea(View::BottomCenterArea);
 
@@ -63,11 +63,11 @@ VirtualJoystickView2::~VirtualJoystickView2()
 
 void VirtualJoystickView2::onAttachedMenuRequest(MenuManager& menuManager)
 {
-    auto screenCheck = menuManager.addCheckItem(_("Analog stick mode"));
-    screenCheck->setChecked(impl->isAnalogViewEnabled);
+    auto screenCheck = menuManager.addCheckItem(_("Dragger mode"));
+    screenCheck->setChecked(impl->isDraggerViewEnabled);
     screenCheck->sigToggled().connect([&](bool checked){
-        impl->isAnalogViewEnabled = checked;
-        impl->joystickWidget->setViewMode(checked ? ViewMode::AnalogView : ViewMode::NormalView);
+        impl->isDraggerViewEnabled = checked;
+        impl->joystickWidget->setViewMode(checked ? ViewMode::DraggerView : ViewMode::NormalView);
     });
 }
 

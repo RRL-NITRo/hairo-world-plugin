@@ -15,7 +15,7 @@ public:
     VirtualJoystickWidget(QWidget* parent = nullptr);
     virtual ~VirtualJoystickWidget();
 
-    enum ViewMode { NormalView, AnalogView };
+    enum ViewMode { NormalView, DraggerView };
 
     void setViewMode(ViewMode mode);
 

@@ -26,8 +26,8 @@ msgstr "デバイス"
 msgid "Virtual Joystick2"
 msgstr "仮想ジョイスティック2"
 
-msgid "Analog stick mode"
-msgstr "アナログスティックモード"
+msgid "Dragger mode"
+msgstr "ドラッガーモード"
 
 msgid "Joystick"
 msgstr ""

@@ -75,6 +75,54 @@ ButtonInfo buttonInfo[] = {
     { "V", 5,  4, false, 1.0,  8,     Qt::Key_V },
     { "N", 5,  6, false, 1.0,  9,     Qt::Key_N },
     { " ", 5,  5, false, 1.0, 10, Qt::Key_Space }
+
+};
+
+struct VirtualAxisInfo {
+    int realId;
+    bool isPositive;
+    int virtualId;
+};
+
+VirtualAxisInfo virtualAxisInfo[] = {
+    { 0, false,  6 },
+    { 0,  true,  7 },
+    { 1, false,  4 },
+    { 1,  true,  5 },
+
+    { 2, false, 10 },
+    { 2,  true, 11 },
+    { 3, false,  8 },
+    { 3,  true,  9 },
+
+    { 4, false,  2 },
+    { 4,  true,  3 },
+    { 5, false,  0 },
+    { 5,  true,  1 },
+
+    { 6,  true, 12 },
+    { 7,  true, 13 }
+};
+
+struct VirtualButtonInfo {
+    int realId;
+    int virtualId;
+};
+
+VirtualButtonInfo virtualButtonInfo[] = {
+    {  0, 14 },
+    {  1, 15 },
+    {  2, 16 },
+    {  3, 17 },
+
+    {  4, 18 },
+    {  5, 19 },
+    {  6, 20 },
+    {  7, 21 },
+
+    {  8, 22 },
+    {  9, 23 },
+    { 10, 24 }
 };
 
 }
@@ -104,9 +152,11 @@ public:
     bool onKeyStateChanged(int key, bool on);
     void onButtonPressed(int index);
     void onButtonReleased(int index);
-    void onButtonClicked(const int& id, bool isPressed);
-    void onAxis(const int& id, const double& position);
-    void onButton(const int& id, bool isPressed);
+    void onButtonClicked(int id, bool isPressed);
+    void onAxis(int id, double position);
+    void onButton(int id, bool isPressed);
+    void onVirtualAxis(int id, double position);
+    void onVirtualButton(int id, bool isPressed);
 
     virtual int numAxes() const;
     virtual int numButtons() const;
@@ -172,8 +222,10 @@ VirtualJoystickWidget::Impl::Impl(VirtualJoystickWidget* self)
     firstPageWidget->setLayout(vbox);
 
     auto secondPageWidget = new OnScreenJoystickWidget;
-    secondPageWidget->sigAxis().connect([&](int id, double position){ onAxis(id, position); });
-    secondPageWidget->sigButton().connect([&](int id, bool isPressed){ onButton(id, isPressed); });
+    secondPageWidget->sigAxis().connect(
+        [&](int id, double position){ onVirtualAxis(id, position); });
+    secondPageWidget->sigButton().connect(
+        [&](int id, bool isPressed){ onVirtualButton(id, isPressed); });
 
     stackedLayout = new QStackedLayout;
     stackedLayout->addWidget(firstPageWidget);
@@ -249,7 +301,7 @@ void VirtualJoystickWidget::Impl::onButtonReleased(int index)
 }
 
 
-void VirtualJoystickWidget::Impl::onButtonClicked(const int& id, bool isPressed)
+void VirtualJoystickWidget::Impl::onButtonClicked(int id, bool isPressed)
 {
     ToolButton& button = buttons[id];
     ButtonInfo& info = buttonInfo[id];
@@ -261,7 +313,7 @@ void VirtualJoystickWidget::Impl::onButtonClicked(const int& id, bool isPressed)
 }
 
 
-void VirtualJoystickWidget::Impl::onAxis(const int& id, const double& position)
+void VirtualJoystickWidget::Impl::onAxis(int id, double position)
 {
     for(int i = 0; i < NUM_JOYSTICK_ELEMENTS; ++i) {
         ToolButton& button = buttons[i];
@@ -280,7 +332,7 @@ void VirtualJoystickWidget::Impl::onAxis(const int& id, const double& position)
 }
 
 
-void VirtualJoystickWidget::Impl::onButton(const int& id, bool isPressed)
+void VirtualJoystickWidget::Impl::onButton(int id, bool isPressed)
 {
     for(int i = 0; i < NUM_JOYSTICK_ELEMENTS; ++i) {
         ButtonInfo& info = buttonInfo[i];
@@ -290,6 +342,40 @@ void VirtualJoystickWidget::Impl::onButton(const int& id, bool isPressed)
             }
         }
     }
+}
+
+
+void VirtualJoystickWidget::Impl::onVirtualAxis(int id, double position)
+{
+    for(int i = 0; i < 14; ++i) {
+        VirtualAxisInfo& info = virtualAxisInfo[i];
+        if(info.realId == id) {
+            if(info.isPositive && position > 0.0) {
+                onButtonPressed(info.virtualId);
+            } else if(!info.isPositive && position < 0.0) {
+                onButtonPressed(info.virtualId);
+            } else {
+                onButtonReleased(info.virtualId);
+            }
+        }
+    }
+    onAxis(id, position);
+}
+
+
+void VirtualJoystickWidget::Impl::onVirtualButton(int id, bool isPressed)
+{
+    for(int i = 0; i < 11; ++i) {
+        VirtualButtonInfo& info = virtualButtonInfo[i];
+        if(info.realId == id) {
+            if(isPressed) {
+                onButtonPressed(info.virtualId);
+            } else {
+                onButtonReleased(info.virtualId);
+            }
+        }
+    }
+    onButton(id, isPressed);
 }
 
 

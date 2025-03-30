@@ -23,7 +23,7 @@ items:
           class: BodyItem
           is_checked: true
           data:
-            file: "${SHARE}/Tutorial/model/crawler.body"
+            file: "crawler.body"
             format: CHOREONOID-BODY
             rootPosition: [ -1, 0, 0.1 ]
             rootAttitude: [

@@ -22,7 +22,7 @@ items:
           class: BodyItem
           is_checked: true
           data:
-            file: "${SHARE}/UGV/model/Husky/Husky-UR5-2F85.body"
+            file: "${SHARE}/model/Husky/Husky-UR5-2F85.body"
             format: CHOREONOID-BODY
             rootPosition: [ 0, 0, 0.15 ]
             rootAttitude: [

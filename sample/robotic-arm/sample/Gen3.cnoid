@@ -22,7 +22,7 @@ items:
           class: BodyItem
           is_checked: true
           data:
-            file: "${SHARE}/RoboticArm/model/Gen3/Gen3WV.body"
+            file: "${SHARE}/model/Gen3/Gen3WV.body"
             format: CHOREONOID-BODY
             rootPosition: [ 0, 0, 0 ]
             rootAttitude: [

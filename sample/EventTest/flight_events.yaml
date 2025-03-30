@@ -7,3 +7,7 @@ events:
     name: Event2
     mass: 1.0
     duration: 480.0
+  -
+    name: Event2
+    mass: 2.0
+    duration: 10.0

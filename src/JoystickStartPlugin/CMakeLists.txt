@@ -12,7 +12,6 @@ set(sources
 
 set(headers
   AxisWidget.h
-  ConfigurableJoystick.h
   DelayedJoystick.h
   OnScreenJoystickWidget.h
   IntervalTimer.h
@@ -24,7 +23,6 @@ set(headers
   exportdecl.h
 )
 
-choreonoid_make_header_public(ConfigurableJoystick.h)
 choreonoid_make_header_public(DelayedJoystick.h)
 
 set(target CnoidJoystickStartPlugin)

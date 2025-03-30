@@ -66,6 +66,8 @@ VFXVisionSimulatorItem::Impl::Impl(VFXVisionSimulatorItem* self)
     : self(self),
       vfx_event_file_path("")
 {
+    self->setName("VFXVisionSimulator");
+
     cameras.clear();
     colliders.clear();
     simulatorItem = nullptr;
@@ -191,6 +193,7 @@ void VFXVisionSimulatorItem::Impl::onCameraStateChanged(Camera* camera)
     }
 
     for(auto& collider : colliders) {
+        bool is_link_collided = false;
         if(collision(collider, link->T().translation())) {
             hue = collider->hsv()[0];
             saturation = collider->hsv()[1];
@@ -207,11 +210,13 @@ void VFXVisionSimulatorItem::Impl::onCameraStateChanged(Camera* camera)
             pepper_chance = collider->pepperChance();
             mosaic_chance = collider->mosaicChance();
             kernel = collider->kernel();
+
+            is_link_collided = true;
         }
 
         for(auto& event : events) {
             for(auto& target_collider : event.targetColliders()) {
-                if(target_collider == collider->name()) {
+                if(target_collider == collider->name() && is_link_collided) {
                     double begin_time = event.beginTime();
                     double end_time = std::max({ event.endTime(), event.beginTime() + event.duration() });
                     bool is_event_enabled = current_time >= begin_time ? true: false;

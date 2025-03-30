@@ -4,6 +4,7 @@
 */
 
 #include "VirtualJoystickView2.h"
+#include <cnoid/Archive>
 #include <cnoid/MenuManager>
 #include <cnoid/ViewManager>
 #include <QBoxLayout>
@@ -74,11 +75,16 @@ void VirtualJoystickView2::onAttachedMenuRequest(MenuManager& menuManager)
 
 bool VirtualJoystickView2::storeState(Archive& archive)
 {
+    archive.write("enable_dragger_mode", impl->isDraggerViewEnabled);
     return true;
 }
 
 
 bool VirtualJoystickView2::restoreState(const Archive& archive)
 {
+    if(archive.read("enable_dragger_mode", impl->isDraggerViewEnabled)) {
+        impl->joystickWidget->setViewMode(
+            impl->isDraggerViewEnabled ? ViewMode::DraggerView : ViewMode::NormalView);
+    }
     return true;
 }

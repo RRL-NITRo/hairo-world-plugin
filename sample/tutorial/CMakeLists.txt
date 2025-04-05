@@ -1,1 +1,4 @@
-add_subdirectory(Tutorial)
+choreonoid_add_simple_controller(BoxROVJoystickController BoxROVJoystickController.cpp)
+target_link_libraries(BoxROVJoystickController CnoidCFDPlugin)
+
+# choreonoid_add_simple_controller(CrawlerJoystickController CrawlerJoystickController.cpp)

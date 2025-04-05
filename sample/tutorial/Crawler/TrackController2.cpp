@@ -18,8 +18,8 @@ public:
         trackR[1] = io->body()->link("TRACK_FR");
 
         for(int i = 0; i < 2; ++i) {
-            trackL[i]->setActuationMode(Link::JOINT_SURFACE_VELOCITY);
-            trackR[i]->setActuationMode(Link::JOINT_SURFACE_VELOCITY);
+            trackL[i]->setActuationMode(Link::JointVelocity);
+            trackR[i]->setActuationMode(Link::JointVelocity);
 
             io->enableOutput(trackL[i]);
             io->enableOutput(trackR[i]);

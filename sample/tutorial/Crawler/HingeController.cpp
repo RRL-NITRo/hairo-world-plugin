@@ -3,7 +3,7 @@
 
 using namespace cnoid;
 
-class TurretController2 : public SimpleController
+class HingeController : public SimpleController
 {
     Link* joints[2];
     double q_ref[2];
@@ -14,12 +14,12 @@ class TurretController2 : public SimpleController
 public:
     virtual bool initialize(SimpleControllerIO* io) override
     {
-        joints[0] = io->body()->link("TURRET_Y");
-        joints[1] = io->body()->link("TURRET_P");
+        joints[0] = io->body()->link("HINGE_L");
+        joints[1] = io->body()->link("HINGE_R");
 
         for(int i = 0; i < 2; ++i) {
             Link* joint = joints[i];
-            joint->setActuationMode(Link::JOINT_TORQUE);
+            joint->setActuationMode(Link::JointEffort);
             io->enableIO(joint);
             q_ref[i] = q_prev[i] = joint->q();
         }
@@ -33,7 +33,7 @@ public:
     {
         static const double P = 200.0;
         static const double D = 50.0;
-        static const int axisID[] = { 2, 3 };
+        static const int axisID[] = { 5, 5 };
 
         joystick.readCurrentState();
 
@@ -45,7 +45,7 @@ public:
 
             double pos = joystick.getPosition(axisID[i]);
             if(fabs(pos) > 0.25) {
-                double deltaq = 0.002 * pos;
+                double deltaq = -0.002 * pos;
                 q_ref[i] += deltaq;
                 dq_ref = deltaq / dt;
             }
@@ -58,4 +58,4 @@ public:
     }
 };
 
-CNOID_IMPLEMENT_SIMPLE_CONTROLLER_FACTORY(TurretController2)
+CNOID_IMPLEMENT_SIMPLE_CONTROLLER_FACTORY(HingeController)

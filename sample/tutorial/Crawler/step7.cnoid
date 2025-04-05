@@ -30,10 +30,10 @@ items:
               1.2246468e-16, -1, 0,
               0, 0, 1 ]
             jointDisplacements: [ 0, 0, 0, 0, 0, 0, 0, 0 ]
-            initialRootPosition: [ 0, 0, 0.1 ]
+            initialRootPosition: [ 2, 0.5, 0.1 ]
             initialRootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
+              -1, -1.2246468e-16, 0,
+              1.2246468e-16, -1, 0,
               0, 0, 1 ]
             fix_root: false
             collisionDetection: true
@@ -89,31 +89,8 @@ items:
                 base_directory: "Controller directory"
                 reloading: false
                 export_symbols: false
-            -
-              id: 7
-              name: "CameraController"
-              plugin: Body
-              class: SimpleControllerItem
-              data:
-                isNoDelayMode: false
-                controllerOptions: ""
-                controller: "CrawlerTutorial_CameraController"
-                base_directory: "Controller directory"
-                reloading: false
-                export_symbols: false
-            -
-              id: 8
-              name: "SensorVisualizer"
-              plugin: Body
-              class: SensorVisualizerItem
-              data:
-                sub_items:
-                  -
-                    class: CameraImageVisualizerItem
-                    name: Camera
-                    is_checked: true
         -
-          id: 9
+          id: 7
           name: "AISTSimulator"
           plugin: Body
           class: AISTSimulatorItem
@@ -144,29 +121,8 @@ items:
             kinematicWalking: false
             2Dmode: false
             oldAccelSensorMode: false
-          children:
-            -
-              id: 10
-              name: "GLVisionSimulator"
-              plugin: GLVisionSimulator
-              class: GLVisionSimulatorItem
-              data:
-                enabled: true
-                max_frame_rate: 1000
-                max_latency: 1
-                record_vision_data: true
-                thread_mode: Sensor
-                best_effort: true
-                all_scene_objects: true
-                range_sensor_precision_ratio: 2
-                depth_error: 0
-                background_color: [ 0, 0, 0 ]
-                enable_head_light: true
-                enable_world_light: true
-                enable_additional_lights: true
-                antialiasing: false
         -
-          id: 11
+          id: 8
           name: "Labo1"
           plugin: Body
           class: BodyItem
@@ -200,9 +156,6 @@ views:
     name: "画像"
     plugin: Base
     class: ImageView
-    mounted: true
-    state:
-      imageable_item: [ 8, "Camera" ]
   -
     id: 2
     plugin: Base
@@ -214,7 +167,7 @@ views:
     class: ItemTreeView
     mounted: true
     state:
-      expanded: [ 1, 2, 8, 9 ]
+      expanded: [ 1, 2 ]
   -
     id: 4
     plugin: Base
@@ -376,7 +329,7 @@ Body:
         show_cm_projection: false
         show_zmp: false
       -
-        body_item: 11
+        body_item: 8
         show_cm: false
         show_cm_projection: false
         show_zmp: false
@@ -446,8 +399,7 @@ viewAreas:
               children:
                 -
                   type: pane
-                  views: [ 10, 1 ]
-                  current: 1
+                  views: [ 10 ]
                 -
                   type: pane
                   views: [ 9, 8 ]
@@ -466,4 +418,3 @@ layoutOfToolBars:
       - { name: "GraphBar", x: 0, priority: 3 }
       - { name: "CaptureBar", x: 0, priority: 4 }
       - { name: "DisplayValueFormatBar", x: 0, priority: 5 }
-      - { name: "ImageViewBar", x: 1600, priority: 0 }

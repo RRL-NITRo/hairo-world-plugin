@@ -13,7 +13,7 @@
 #include <cnoid/SimulatorItem>
 #include <cnoid/MultiColliderItem>
 #include <mutex>
-#include "VFXConverter.h"
+#include "VisualFilter.h"
 #include "NoisyCamera.h"
 #include "VFXEventReader.h"
 #include "gettext.h"
@@ -39,7 +39,7 @@ public:
     SimulatorItem* simulatorItem;
     ConnectionSet connections;
     std::mutex convertMutex;
-    VFXConverter converter;
+    VisualFilter filter;
     string vfx_event_file_path;
     vector<VFXEvent> events;
 };
@@ -255,31 +255,31 @@ void VFXVisionSimulatorItem::Impl::onCameraStateChanged(Camera* camera)
     {
         std::lock_guard<std::mutex> lock(convertMutex);
         std::shared_ptr<Image> image = std::make_shared<Image>(*camera->sharedImage());
-        converter.initialize(image->width(), image->height());
+        filter.initialize(image->width(), image->height());
         if(hue > 0.0 || saturation > 0.0 || value > 0.0) {
-            converter.hsv(image.get(), hue, saturation, value);
+            filter.hsv(image.get(), hue, saturation, value);
         }
         if(red > 0.0 || green > 0.0 || blue > 0.0) {
-            converter.rgb(image.get(), red, green, blue);
+            filter.rgb(image.get(), red, green, blue);
         }
         if(std_dev > 0.0) {
-            converter.gaussian_noise(image.get(), std_dev);
+            filter.gaussian_noise(image.get(), std_dev);
         }
         if(salt_chance > 0.0) {
             if(salt_amount > 0.0) {
-                converter.random_salt(image.get(), salt_amount, salt_chance);
+                filter.random_salt(image.get(), salt_amount, salt_chance);
             }
         }
         if(pepper_chance > 0.0) {
             if(pepper_amount > 0.0) {
-                converter.random_pepper(image.get(), pepper_amount, pepper_chance);
+                filter.random_pepper(image.get(), pepper_amount, pepper_chance);
             }
         }
         if(coef_b < 0.0 || coef_d > 1.0) {
-            converter.barrel_distortion(image.get(), coef_b, coef_d);
+            filter.barrel_distortion(image.get(), coef_b, coef_d);
         }
         if(mosaic_chance > 0.0) {
-            converter.random_mosaic(image.get(), mosaic_chance, kernel);
+            filter.random_mosaic(image.get(), mosaic_chance, kernel);
         }
         camera->setImage(image);
     }

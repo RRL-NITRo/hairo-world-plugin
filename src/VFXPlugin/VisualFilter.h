@@ -2,8 +2,8 @@
    @author Kenta Suzuki
 */
 
-#ifndef CNOID_VFX_PLUGIN_VFX_CONVERTER_H
-#define CNOID_VFX_PLUGIN_VFX_CONVERTER_H
+#ifndef CNOID_VFX_PLUGIN_VISUAL_FILTER_H
+#define CNOID_VFX_PLUGIN_VISUAL_FILTER_H
 
 #include <cnoid/Image>
 #include <QImage>
@@ -13,10 +13,10 @@
 
 namespace cnoid {
 
-class CNOID_EXPORT VFXConverter
+class CNOID_EXPORT VisualFilter
 {
 public:
-    VFXConverter();
+    VisualFilter();
 
     void initialize(int width, int height);
 
@@ -51,4 +51,4 @@ QImage toQImage(Image* image);
 
 }
 
-#endif // CNOID_VFX_PLUGIN_VFX_CONVERTER_H
+#endif // CNOID_VFX_PLUGIN_VISUAL_FILTER_H

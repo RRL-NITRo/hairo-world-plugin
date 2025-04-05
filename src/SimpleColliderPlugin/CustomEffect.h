@@ -2,19 +2,20 @@
    @author Kenta Suzuki
 */
 
-#ifndef CNOID_SIMPLECOLLIDER_PLUGIN_CUSTOM_EFFECTS_H
-#define CNOID_SIMPLECOLLIDER_PLUGIN_CUSTOM_EFFECTS_H
+#ifndef CNOID_SIMPLECOLLIDER_PLUGIN_CUSTOM_EFFECT_H
+#define CNOID_SIMPLECOLLIDER_PLUGIN_CUSTOM_EFFECT_H
 
 #include <cnoid/EigenUtil>
+#include <cnoid/ValueTree>
 #include "exportdecl.h"
 
 namespace cnoid {
 
-class CNOID_EXPORT CFDEffects
+class CNOID_EXPORT CFDEffect
 {
 public:
-    CFDEffects();
-    CFDEffects(const CFDEffects& org);
+    CFDEffect();
+    CFDEffect(const CFDEffect& org);
 
     void setDensity(const double& density) { density_ = density; }
     double density() const { return density_; }
@@ -32,11 +33,11 @@ private:
     Vector3 unsteadyFlow_;
 };
 
-class CNOID_EXPORT TCEffects
+class CNOID_EXPORT TCEffect
 {
 public:
-    TCEffects();
-    TCEffects(const TCEffects& org);
+    TCEffect();
+    TCEffect(const TCEffect& org);
 
     void setInboundDelay(const double& inboundDelay) { inboundDelay_ = inboundDelay; }
     double inboundDelay() const { return inboundDelay_; }
@@ -66,11 +67,11 @@ private:
     std::string destination_;
 };
 
-class CNOID_EXPORT VFXEffects
+class CNOID_EXPORT VisualEffect
 {
 public:
-    VFXEffects();
-    VFXEffects(const VFXEffects& org);
+    VisualEffect();
+    VisualEffect(const VisualEffect& org);
 
     void setHsv(const Vector3& hsv) { hsv_ = hsv; }
     Vector3 hsv() const { return hsv_; }
@@ -95,6 +96,8 @@ public:
     void setKernel(const int& kernel) { kernel_ = kernel; }
     int kernel() const { return kernel_; }
 
+    bool readCameraInfo(const Mapping* info);
+
 private:
     Vector3 hsv_;
     Vector3 rgb_;
@@ -111,4 +114,4 @@ private:
 
 }
 
-#endif // CNOID_SIMPLECOLLIDER_PLUGIN_CUSTOM_EFFECTS_H
+#endif // CNOID_SIMPLECOLLIDER_PLUGIN_CUSTOM_EFFECT_H

@@ -2,7 +2,7 @@
    @author Kenta Suzuki
 */
 
-#include "VFXConverter.h"
+#include "VisualFilter.h"
 
 using namespace cnoid;
 
@@ -27,7 +27,7 @@ inline unsigned long rand(int min, int max) { return min + xorshift128() % (max 
 }
 
 
-VFXConverter::VFXConverter()
+VisualFilter::VisualFilter()
 {
     width_ = 0;
     height_ = 0;
@@ -38,14 +38,14 @@ VFXConverter::VFXConverter()
 }
 
 
-void VFXConverter::initialize(int width, int height)
+void VisualFilter::initialize(int width, int height)
 {
     width_ = width;
     height_ = height;
 }
 
 
-void VFXConverter::red(Image* image)
+void VisualFilter::red(Image* image)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -60,7 +60,7 @@ void VFXConverter::red(Image* image)
 }
 
 
-void VFXConverter::green(Image* image)
+void VisualFilter::green(Image* image)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -75,7 +75,7 @@ void VFXConverter::green(Image* image)
 }
 
 
-void VFXConverter::blue(Image* image)
+void VisualFilter::blue(Image* image)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -90,7 +90,7 @@ void VFXConverter::blue(Image* image)
 }
 
 
-void VFXConverter::white(Image* image)
+void VisualFilter::white(Image* image)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -104,7 +104,7 @@ void VFXConverter::white(Image* image)
 }
 
 
-void VFXConverter::black(Image* image)
+void VisualFilter::black(Image* image)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -118,7 +118,7 @@ void VFXConverter::black(Image* image)
 }
 
 
-void VFXConverter::salt(Image* image, const double& salt_amount)
+void VisualFilter::salt(Image* image, const double& salt_amount)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -135,7 +135,7 @@ void VFXConverter::salt(Image* image, const double& salt_amount)
 }
 
 
-void VFXConverter::random_salt(Image* image, const double& salt_amount, const double& salt_chance)
+void VisualFilter::random_salt(Image* image, const double& salt_amount, const double& salt_chance)
 {
     double r = (double)(rand(0, 100)) / 100.0;
     if(r < salt_chance) {
@@ -144,7 +144,7 @@ void VFXConverter::random_salt(Image* image, const double& salt_amount, const do
 }
 
 
-void VFXConverter::pepper(Image* image, const double& pepper_amount)
+void VisualFilter::pepper(Image* image, const double& pepper_amount)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -161,7 +161,7 @@ void VFXConverter::pepper(Image* image, const double& pepper_amount)
 }
 
 
-void VFXConverter::random_pepper(Image* image, const double& pepper_amount, const double& pepper_chance)
+void VisualFilter::random_pepper(Image* image, const double& pepper_amount, const double& pepper_chance)
 {
     double r = (double)(rand(0, 100)) / 100.0;
     if(r < pepper_chance) {
@@ -170,7 +170,7 @@ void VFXConverter::random_pepper(Image* image, const double& pepper_amount, cons
 }
 
 
-void VFXConverter::salt_pepper(Image* image, const double& salt_amount, const double& pepper_amount)
+void VisualFilter::salt_pepper(Image* image, const double& salt_amount, const double& pepper_amount)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -191,7 +191,7 @@ void VFXConverter::salt_pepper(Image* image, const double& salt_amount, const do
 }
 
 
-void VFXConverter::rgb(Image* image, const double& red, const double& green, const double& blue)
+void VisualFilter::rgb(Image* image, const double& red, const double& green, const double& blue)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -207,7 +207,7 @@ void VFXConverter::rgb(Image* image, const double& red, const double& green, con
 }
 
 
-void VFXConverter::hsv(Image* image, const double& hue, const double& saturation, const double& value)
+void VisualFilter::hsv(Image* image, const double& hue, const double& saturation, const double& value)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -236,7 +236,7 @@ void VFXConverter::hsv(Image* image, const double& hue, const double& saturation
 }
 
 
-void VFXConverter::gaussian_noise(Image* image, const double& std_dev)
+void VisualFilter::gaussian_noise(Image* image, const double& std_dev)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -253,7 +253,7 @@ void VFXConverter::gaussian_noise(Image* image, const double& std_dev)
 }
 
 
-void VFXConverter::barrel_distortion(Image* image, const double& coef_b, const double& coef_d)
+void VisualFilter::barrel_distortion(Image* image, const double& coef_b, const double& coef_d)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -293,7 +293,7 @@ void VFXConverter::barrel_distortion(Image* image, const double& coef_b, const d
 }
 
 
-void VFXConverter::mosaic(Image* image, int kernel)
+void VisualFilter::mosaic(Image* image, int kernel)
 {
     image->setSize(width_, height_, 3);
     unsigned char* pixels = image->pixels();
@@ -337,7 +337,7 @@ void VFXConverter::mosaic(Image* image, int kernel)
 }
 
 
-void VFXConverter::random_mosaic(Image* image, const double& rate, int kernel)
+void VisualFilter::random_mosaic(Image* image, const double& rate, int kernel)
 {
     double r = (double)(rand(0, 100)) / 100.0;
     if(r < rate) {

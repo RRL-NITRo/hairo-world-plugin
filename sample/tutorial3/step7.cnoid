@@ -24,16 +24,16 @@ items:
           data:
             file: "crawler.body"
             format: CHOREONOID-BODY
-            rootPosition: [ 0, 0, 0.1 ]
+            rootPosition: [ 2, 0.5, 0.1 ]
             rootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
+              -1, -1.2246468e-16, 0,
+              1.2246468e-16, -1, 0,
               0, 0, 1 ]
             jointDisplacements: [ 0, 0, 0, 0, 0, 0, 0, 0 ]
-            initialRootPosition: [ 0, 0, 0.1 ]
+            initialRootPosition: [ 2, 0.5, 0.1 ]
             initialRootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
+              -1, -1.2246468e-16, 0,
+              1.2246468e-16, -1, 0,
               0, 0, 1 ]
             fix_root: false
             collisionDetection: true
@@ -91,30 +91,6 @@ items:
                 export_symbols: false
         -
           id: 7
-          name: "Floor"
-          plugin: Body
-          class: BodyItem
-          is_checked: true
-          data:
-            file: "${SHARE}/model/misc/floor.body"
-            format: CHOREONOID-BODY
-            rootPosition: [ 0, 0, -0.1 ]
-            rootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
-              0, 0, 1 ]
-            initialRootPosition: [ 0, 0, -0.1 ]
-            initialRootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
-              0, 0, 1 ]
-            fix_root: true
-            collisionDetection: true
-            selfCollisionDetection: false
-            lock_location: false
-            scene_sensitive: true
-        -
-          id: 8
           name: "AISTSimulator"
           plugin: Body
           class: AISTSimulatorItem
@@ -145,6 +121,31 @@ items:
             kinematicWalking: false
             2Dmode: false
             oldAccelSensorMode: false
+        -
+          id: 8
+          name: "Labo1"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data:
+            file: "${SHARE}/model/Labo1/Labo1v2.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, -0.1 ]
+            rootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            jointDisplacements: [ 0 ]
+            initialRootPosition: [ 0, 0, -0.1 ]
+            initialRootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
 views:
   -
     id: 0
@@ -193,7 +194,7 @@ views:
         -
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ 3, 1.5, 1.2 ]
+          eye: [ 5.55765, 2.77883, 1.71153 ]
           direction: [ -0.880451, -0.440225, -0.17609 ]
           up: [ -0.1575, -0.0787495, 0.984374 ]
         -
@@ -323,7 +324,7 @@ Body:
         show_cm_projection: false
         show_zmp: false
       -
-        body_item: 7
+        body_item: 8
         show_cm: false
         show_cm_projection: false
         show_zmp: false

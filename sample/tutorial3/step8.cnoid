@@ -24,10 +24,10 @@ items:
           data:
             file: "crawler.body"
             format: CHOREONOID-BODY
-            rootPosition: [ 0, 0, 0.1 ]
+            rootPosition: [ 2, 0.5, 0.1 ]
             rootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
+              -1, -1.2246468e-16, 0,
+              1.2246468e-16, -1, 0,
               0, 0, 1 ]
             jointDisplacements: [ 0, 0, 0, 0, 0, 0, 0, 0 ]
             initialRootPosition: [ 0, 0, 0.1 ]
@@ -114,30 +114,6 @@ items:
                     is_checked: true
         -
           id: 9
-          name: "Floor"
-          plugin: Body
-          class: BodyItem
-          is_checked: true
-          data:
-            file: "${SHARE}/model/misc/floor.body"
-            format: CHOREONOID-BODY
-            rootPosition: [ 0, 0, -0.1 ]
-            rootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
-              0, 0, 1 ]
-            initialRootPosition: [ 0, 0, -0.1 ]
-            initialRootAttitude: [
-              1, 0, 0,
-              0, 1, 0,
-              0, 0, 1 ]
-            fix_root: true
-            collisionDetection: true
-            selfCollisionDetection: false
-            lock_location: false
-            scene_sensitive: true
-        -
-          id: 10
           name: "AISTSimulator"
           plugin: Body
           class: AISTSimulatorItem
@@ -170,7 +146,7 @@ items:
             oldAccelSensorMode: false
           children:
             -
-              id: 11
+              id: 10
               name: "GLVisionSimulator"
               plugin: GLVisionSimulator
               class: GLVisionSimulatorItem
@@ -189,6 +165,31 @@ items:
                 enable_world_light: true
                 enable_additional_lights: true
                 antialiasing: false
+        -
+          id: 11
+          name: "Labo1"
+          plugin: Body
+          class: BodyItem
+          is_checked: true
+          data:
+            file: "${SHARE}/model/Labo1/Labo1v2.body"
+            format: CHOREONOID-BODY
+            rootPosition: [ 0, 0, -0.1 ]
+            rootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            jointDisplacements: [ 0 ]
+            initialRootPosition: [ 0, 0, -0.1 ]
+            initialRootAttitude: [
+              1, 0, 0,
+              0, 1, 0,
+              0, 0, 1 ]
+            fix_root: true
+            collisionDetection: true
+            selfCollisionDetection: false
+            lock_location: false
+            scene_sensitive: true
 views:
   -
     id: 0
@@ -213,7 +214,7 @@ views:
     class: ItemTreeView
     mounted: true
     state:
-      expanded: [ 1, 2, 8, 10 ]
+      expanded: [ 1, 2, 8, 9 ]
   -
     id: 4
     plugin: Base
@@ -245,7 +246,7 @@ views:
         -
           camera: [ System, Perspective ]
           isCurrent: true
-          eye: [ 3, 1.5, 1.2 ]
+          eye: [ 5.55765, 2.77883, 1.71153 ]
           direction: [ -0.880451, -0.440225, -0.17609 ]
           up: [ -0.1575, -0.0787495, 0.984374 ]
         -
@@ -375,7 +376,7 @@ Body:
         show_cm_projection: false
         show_zmp: false
       -
-        body_item: 9
+        body_item: 11
         show_cm: false
         show_cm_projection: false
         show_zmp: false

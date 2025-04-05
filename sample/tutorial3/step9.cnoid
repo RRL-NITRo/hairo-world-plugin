@@ -17,12 +17,12 @@ items:
       children:
         -
           id: 2
-          name: "SimpleCrawler"
+          name: "Crawler"
           plugin: Body
           class: BodyItem
           is_checked: true
           data:
-            file: "SimpleCrawler.body"
+            file: "crawler.body"
             format: CHOREONOID-BODY
             rootPosition: [ 2, 0.5, 0.1 ]
             rootAttitude: [

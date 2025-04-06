@@ -1,0 +1,78 @@
+Language: Cpp
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+UseTab: Never
+PointerAlignment: Left
+
+ColumnLimit: 100
+
+AccessModifierOffset: -4
+
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+# AlignOperands: true
+AllowShortEnumsOnASingleLine: false
+AlignTrailingComments: true
+
+AlwaysBreakAfterReturnType: None
+AlwaysBreakTemplateDeclarations: true
+
+AllowShortFunctionsOnASingleLine: None
+
+BinPackArguments: false
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: true
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeCatch: true
+  BeforeElse: false
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+BreakConstructorInitializers: AfterColon
+# BreakConstructorInitializers: BeforeComma
+
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 2
+
+EmptyLineBeforeAccessModifier: Always
+
+SortIncludes: true
+IncludeBlocks: Merge
+IncludeCategories:
+  - Regex: '^<.*>'
+    Priority: 1
+  - Regex: '^".*"'
+    Priority: 2
+
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 2
+
+NamespaceIndentation: None
+
+ReflowComments: true
+
+SeparateDefinitionBlocks: Always
+
+SortIncludes: true
+
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: Never
+
+SpacesInConditionalStatement: false
+SpacesInParentheses: false
+SpacesBeforeTrailingComments: 2
+
+BreakStringLiterals: true
+
+IndentWrappedFunctionNames: false

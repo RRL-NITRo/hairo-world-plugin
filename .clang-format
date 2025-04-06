@@ -5,8 +5,6 @@ IndentWidth: 4
 UseTab: Never
 PointerAlignment: Left
 
-ColumnLimit: 100
-
 AccessModifierOffset: -4
 
 AlignAfterOpenBracket: Align
@@ -20,7 +18,6 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: true
 
 AllowShortFunctionsOnASingleLine: None
-
 BinPackArguments: false
 
 BreakBeforeBraces: Custom
@@ -39,21 +36,22 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 
-BreakConstructorInitializers: AfterColon
-# BreakConstructorInitializers: BeforeComma
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerIndentWidth: 4
 
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 2
+ColumnLimit: 0
 
 EmptyLineBeforeAccessModifier: Always
 
 SortIncludes: true
-IncludeBlocks: Merge
 IncludeCategories:
-  - Regex: '^<.*>'
-    Priority: 1
-  - Regex: '^".*"'
-    Priority: 2
+  - Regex: "^<cnoid/"
+    Priority: 50
+  - Regex: "^<Q.*"
+    Priority: 100
+  - Regex: ".*"
+    Priority: 200
 
 KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 2
@@ -64,14 +62,14 @@ ReflowComments: true
 
 SeparateDefinitionBlocks: Always
 
-SortIncludes: true
-
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: Never
 
 SpacesInConditionalStatement: false
 SpacesInParentheses: false
 SpacesBeforeTrailingComments: 2
+Cpp11BracedListStyle: true
+SpacesInContainerLiterals: true
 
 BreakStringLiterals: true
 

@@ -90,11 +90,11 @@ IncludeCategories:
   - Regex: ".*"
     Priority: 200
 
-# IncludeIsMainRegex: '(Test)?$'
+IncludeIsMainRegex: '(Test)?$'
 # IncludeIsMainSourceRegex: ''
-# IndentAccessModifiers: false
-# IndentCaseLabels: false
-# IndentCaseBlocks: false
+IndentAccessModifiers: false
+IndentCaseLabels: false
+IndentCaseBlocks: false
 # IndentGotoLabels: true
 # IndentPPDirectives: None
 # IndentExternBlock: AfterExternBlock
@@ -108,7 +108,7 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 # LambdaBodyIndentation: Signature
 # MacroBlockBegin: ''
 # MacroBlockEnd: ''
-MaxEmptyLinesToKeep: 2
+MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 # ObjCBinPackProtocolList: Auto
 # ObjCBlockIndentWidth: 2
@@ -127,16 +127,16 @@ NamespaceIndentation: None
 # PenaltyIndentedWhitespace: 0
 PointerAlignment: Left
 # PPIndentWidth: -1
-# ReferenceAlignment: Pointer
+ReferenceAlignment: Left
 ReflowComments: true
-# RemoveBracesLLVM: false
+RemoveBracesLLVM: false
 SeparateDefinitionBlocks: Always
 # ShortNamespaceLines: 1
 # SortJavaStaticImport: Before
-# SortUsingDeclarations: true
+SortUsingDeclarations: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeCaseColon: false
-# SpaceBeforeCpp11BracedList: false
+SpaceBeforeCpp11BracedList: false
 # SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
 SpaceBeforeParens: Custom
@@ -157,13 +157,13 @@ SpacesInAngles: Never
 SpacesInConditionalStatement: false
 SpacesInContainerLiterals: true
 SpacesInCStyleCastParentheses: false
-# SpacesInLineCommentPrefix:
-#   Minimum: 1
-#   Maximum: -1
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: -1
 SpacesInParentheses: false
-# SpacesInSquareBrackets: false
-# SpaceBeforeSquareBrackets: false
-# BitFieldColonSpacing: Both
+SpacesInSquareBrackets: false
+SpaceBeforeSquareBrackets: false
+BitFieldColonSpacing: Both
 # Standard: Latest
 # StatementAttributeLikeMacros:
 #   - Q_EMIT

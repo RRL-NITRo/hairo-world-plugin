@@ -4,9 +4,9 @@ BasedOnStyle: 'LLVM'
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Right
-# AlignConsecutiveMacros: None
+AlignConsecutiveMacros: true
 AlignConsecutiveAssignments: false
-# AlignConsecutiveBitFields: None
+AlignConsecutiveBitFields: None
 AlignConsecutiveDeclarations: false
 # AlignEscapedNewlines: Right
 AlignOperands: AlignAfterOperator
@@ -17,12 +17,12 @@ AllowShortEnumsOnASingleLine: false
 # AllowShortBlocksOnASingleLine: Never
 # AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
-# AllowShortLambdasOnASingleLine: All
+AllowShortLambdasOnASingleLine: All
 # AllowShortIfStatementsOnASingleLine: Never
 # AllowShortLoopsOnASingleLine: false
 # AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
-# AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
 # AttributeMacros:
 #   - __capability
@@ -54,7 +54,7 @@ BreakBeforeBraces: Custom
 # BreakInheritanceList: BeforeColon
 # BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
-# BreakConstructorInitializersBeforeComma: false
+BreakConstructorInitializersBeforeComma: true
 # BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
 ColumnLimit: 0
@@ -67,13 +67,13 @@ ConstructorInitializerIndentWidth: 4
 Cpp11BracedListStyle: true
 # DeriveLineEnding: true
 # DerivePointerAlignment: false
-# DisableFormat: false
+DisableFormat: false
 # EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: Always
 # ExperimentalAutoDetectBinPacking: false
 # PackConstructorInitializers: BinPack
 # AllowAllConstructorInitializersOnNextLine: true
-# FixNamespaceComments: true
+FixNamespaceComments: true
 # ForEachMacros:
 #   - foreach
 #   - Q_FOREACH
@@ -135,28 +135,28 @@ SeparateDefinitionBlocks: Always
 # SortJavaStaticImport: Before
 # SortUsingDeclarations: true
 SpaceBeforeAssignmentOperators: true
-# SpaceBeforeCaseColon: false
+SpaceBeforeCaseColon: false
 # SpaceBeforeCpp11BracedList: false
 # SpaceBeforeCtorInitializerColon: true
-# SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: Never
-# SpaceBeforeParensOptions:
-#   AfterControlStatements: true
-#   AfterForeachMacros: true
-#   AfterFunctionDefinitionName: false
-#   AfterFunctionDeclarationName: false
-#   AfterIfMacros: true
-#   AfterOverloadedOperator: false
-#   BeforeNonEmptyParentheses: false
+SpaceBeforeInheritanceColon: true
+SpaceBeforeParens: Custom
+SpaceBeforeParensOptions:
+  AfterControlStatements: false
+  AfterForeachMacros: false
+  AfterFunctionDefinitionName: false
+  AfterFunctionDeclarationName: false
+  AfterIfMacros: false
+  AfterOverloadedOperator: false
+  BeforeNonEmptyParentheses: false
 # SpaceAroundPointerQualifiers: Default
-# SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeRangeBasedForLoopColon: true
 # SpaceInEmptyBlock: false
-# SpaceInEmptyParentheses: false
+SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
 SpacesInAngles: Never
 SpacesInConditionalStatement: false
 SpacesInContainerLiterals: true
-# SpacesInCStyleCastParentheses: false
+SpacesInCStyleCastParentheses: false
 # SpacesInLineCommentPrefix:
 #   Minimum: 1
 #   Maximum: -1

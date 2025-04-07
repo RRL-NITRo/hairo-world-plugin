@@ -47,28 +47,28 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 
-# BreakBeforeBinaryOperators: None
+BreakBeforeBinaryOperators: NonAssignment
 # BreakBeforeConceptDeclarations: true
 BreakBeforeBraces: Custom
-# BreakBeforeInheritanceComma: false
-# BreakInheritanceList: BeforeColon
-# BreakBeforeTernaryOperators: true
+BreakBeforeInheritanceComma: true
+BreakInheritanceList: BeforeColon
+BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma
 BreakConstructorInitializersBeforeComma: true
 # BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
 ColumnLimit: 0
 # CommentPragmas: '^ IWYU pragma:'
-# QualifierAlignment: Leave
-# CompactNamespaces: false
+QualifierAlignment: Left
+CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
-# ContinuationIndentWidth: 4
+ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
 # DeriveLineEnding: true
-# DerivePointerAlignment: false
+DerivePointerAlignment: true
 DisableFormat: false
-# EmptyLineAfterAccessModifier: Never
+EmptyLineAfterAccessModifier: Never
 EmptyLineBeforeAccessModifier: Always
 # ExperimentalAutoDetectBinPacking: false
 # PackConstructorInitializers: BinPack

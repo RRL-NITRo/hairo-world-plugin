@@ -4,7 +4,7 @@ BasedOnStyle: 'LLVM'
 AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Right
-AlignConsecutiveMacros: true
+AlignConsecutiveMacros: false
 AlignConsecutiveAssignments: false
 AlignConsecutiveBitFields: None
 AlignConsecutiveDeclarations: false
@@ -14,9 +14,9 @@ AlignTrailingComments: true
 # AllowAllArgumentsOnNextLine: true
 # AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortEnumsOnASingleLine: false
-# AllowShortBlocksOnASingleLine: Never
+AllowShortBlocksOnASingleLine: Never
 # AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
+AllowShortFunctionsOnASingleLine: Inline
 AllowShortLambdasOnASingleLine: All
 # AllowShortIfStatementsOnASingleLine: Never
 # AllowShortLoopsOnASingleLine: false
@@ -40,7 +40,7 @@ BraceWrapping:
   # AfterExternBlock: false
   BeforeCatch: false
   BeforeElse: false
-  BeforeLambdaBody: true
+  BeforeLambdaBody: false
   # BeforeWhile: false
   IndentBraces: false
   SplitEmptyFunction: true
@@ -150,7 +150,7 @@ SpaceBeforeParensOptions:
   BeforeNonEmptyParentheses: false
 # SpaceAroundPointerQualifiers: Default
 SpaceBeforeRangeBasedForLoopColon: true
-# SpaceInEmptyBlock: false
+SpaceInEmptyBlock: false
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
 SpacesInAngles: Never
@@ -164,7 +164,7 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 SpaceBeforeSquareBrackets: false
 BitFieldColonSpacing: Both
-# Standard: Latest
+Standard: Latest
 # StatementAttributeLikeMacros:
 #   - Q_EMIT
 # StatementMacros:

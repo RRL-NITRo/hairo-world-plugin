@@ -87,8 +87,18 @@ FixNamespaceComments: true
 IncludeBlocks:   Merge
 IncludeCategories:
   - Regex: "^<cnoid/"
-    Priority: 50
+    Priority: 1
   - Regex: "^<Q.*"
+    Priority: 2
+  - Regex: "^<rclcpp/"
+    Priority: 3
+  - Regex: "^<ros/*"
+    Priority: 4
+  - Regex: "^<geometry_msgs/"
+    Priority: 5
+  - Regex: "^<sensor_msgs/*"
+    Priority: 6
+  - Regex: "^<.*"
     Priority: 100
   - Regex: ".*"
     Priority: 200

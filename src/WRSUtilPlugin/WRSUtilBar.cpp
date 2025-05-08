@@ -144,7 +144,12 @@ WRSUtilBar::Impl::Impl(WRSUtilBar* self)
     self->setVisibleByDefault(false);
 
     auto om = OptionManager::instance();
-    om->add_option("--wrs-util", projectToExecute, "execute registered project");
+    //om->add_option("--wrs-util", projectToExecute, "execute registered project");
+    static bool alreadyAdded = false;
+    if (!alreadyAdded) {
+        om->add_option("--wrs-util", projectToExecute, "execute registered project");
+        alreadyAdded = true;
+    }
     om->sigInputFileOptionsParsed().connect(
         [this](vector<string>& inputFiles){ onInputFileOptionsParsed(inputFiles); });
     om->sigOptionsParsed(1).connect(
